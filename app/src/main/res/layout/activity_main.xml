@@ -3,10 +3,13 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    android:background="#FFCD00">
+    android:background="#FFCD00"
+    tools:context=".TelaPrincipal.MainActivity"
+    tools:ignore="ExtraText">
 
     <!-- Cabeçalho com Logo e Nome do App -->
     <LinearLayout
@@ -25,27 +28,30 @@
             android:layout_width="48dp"
             android:layout_height="48dp"
             android:src="@drawable/ic_logo"
-        android:contentDescription="Logo do App" />
+            android:contentDescription="Logo do App" />
 
         <TextView
             android:id="@+id/tvAppName"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginStart="8dp"
-            android:text="To com FOME"
+            android:text="Tô com Fome!"
             android:textSize="24sp"
             android:textStyle="bold" />
     </LinearLayout>
 
-    <!-- Carousel de Fotos (ViewPager) -->
-    <androidx.viewpager.widget.ViewPager
-        android:id="@+id/viewPager"
+    <!-- Banner de Imagem (substituindo o antigo ViewPager) -->
+    <ImageView
+        android:id="@+id/imgBanner"
         android:layout_width="0dp"
         android:layout_height="200dp"
+        android:layout_marginTop="16dp"
         app:layout_constraintTop_toBottomOf="@id/headerLayout"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="16dp" />
+        android:src="@drawable/banner"
+        android:contentDescription="Banner de Comidas"
+        android:scaleType="centerCrop" />
 
     <!-- Layout para os Botões -->
     <LinearLayout
@@ -54,7 +60,7 @@
         android:layout_height="wrap_content"
         android:orientation="horizontal"
         android:gravity="center"
-        app:layout_constraintTop_toBottomOf="@id/viewPager"
+        app:layout_constraintTop_toBottomOf="@id/imgBanner"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:layout_marginTop="16dp">
