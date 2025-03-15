@@ -7,7 +7,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="#FFCD00"
-    tools:context=".TelaAdicionar.TelaAdicionarActivity">
+    tools:context=".TelaAdicionar.TelaAdicionarRestauranteActivity">
 
     <!-- Imagem para adicionar foto do restaurante -->
     <ImageView

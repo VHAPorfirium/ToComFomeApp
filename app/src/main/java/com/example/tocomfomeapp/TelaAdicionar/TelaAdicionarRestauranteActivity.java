@@ -10,7 +10,7 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.tocomfomeapp.R;
 
-public class TelaAdicionarActivity extends AppCompatActivity {
+public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
