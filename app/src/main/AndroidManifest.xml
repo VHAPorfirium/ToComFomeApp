@@ -13,6 +13,12 @@
         android:theme="@style/Theme.ToComFomeApp"
         tools:targetApi="31">
         <activity
+            android:name=".TelaDetalheRestaurante.TelaDetalhesRestauranteActivity"
+            android:exported="false" />
+        <activity
+            android:name=".TelaVisualizar.TelaVisualizarRestaurantesActivity"
+            android:exported="false" />
+        <activity
             android:name=".TelaAdicionar.TelaAdicionarRestauranteActivity"
             android:exported="false" />
         <activity
