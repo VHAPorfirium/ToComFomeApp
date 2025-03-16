@@ -52,7 +52,6 @@ public class TelaDetalhesRestauranteActivity extends AppCompatActivity {
             txtDescricaoDetalhe.setText(descricao);
             ratingEstrelasDetalhe.setRating(estrelas);
 
-            // Se quiser colocar alguma imagem, pode setar aqui.
             imgRestauranteDetalhe.setImageResource(R.drawable.ic_baseline_camera_alt_24);
         }
     }

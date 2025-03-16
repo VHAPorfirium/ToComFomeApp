@@ -60,26 +60,22 @@ public class RestaurantesAdapter extends RecyclerView.Adapter<RestaurantesAdapte
         holder.txtNomeRestaurante.setText(restaurante.getNome());
         holder.ratingEstrelas.setRating(restaurante.getEstrelas());
 
-        // Exemplo de imagem "placeholder". Caso tenha URL ou algo assim, use uma biblioteca (Picasso, Glide, etc.)
+        // Exemplo de imagem "placeholder".
         holder.imgRestaurante.setImageResource(R.drawable.ic_baseline_camera_alt_24);
 
         // Clique no item para abrir a tela de detalhes
-        holder.itemView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        holder.itemView.setOnClickListener(v -> {
+            Intent intent = new Intent(context, TelaDetalhesRestauranteActivity.class);
 
-                Intent intent = new Intent(context, TelaDetalhesRestauranteActivity.class);
+            // Passando dados via Intent
+            intent.putExtra("NOME_RESTAURANTE", restaurante.getNome());
+            intent.putExtra("ENDERECO_RESTAURANTE", restaurante.getEndereco());
+            intent.putExtra("BAIRRO_RESTAURANTE", restaurante.getBairro());
+            intent.putExtra("CIDADE_RESTAURANTE", restaurante.getCidade());
+            intent.putExtra("DESCRICAO_RESTAURANTE", restaurante.getDescricao());
+            intent.putExtra("RATING_RESTAURANTE", restaurante.getEstrelas());
 
-                // Passando dados via Intent
-                intent.putExtra("NOME_RESTAURANTE", restaurante.getNome());
-                intent.putExtra("ENDERECO_RESTAURANTE", restaurante.getEndereco());
-                intent.putExtra("BAIRRO_RESTAURANTE", restaurante.getBairro());
-                intent.putExtra("CIDADE_RESTAURANTE", restaurante.getCidade());
-                intent.putExtra("DESCRICAO_RESTAURANTE", restaurante.getDescricao());
-                intent.putExtra("RATING_RESTAURANTE", restaurante.getEstrelas());
-
-                context.startActivity(intent);
-            }
+            context.startActivity(intent);
         });
     }
 
