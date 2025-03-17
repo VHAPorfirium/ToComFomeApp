@@ -7,6 +7,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.Toast;
 
 import androidx.activity.result.ActivityResultLauncher;
 import androidx.activity.result.contract.ActivityResultContracts;
@@ -28,8 +29,28 @@ public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
     private Button btnSalvar, btnAdicionarFoto;
     private ImageView imgFoto;
 
-    // Launcher para selecionar imagem da galeria
-    private ActivityResultLauncher<Intent> photoPickerLauncher;
+    // Guardará a URI da foto (com permissão persistente)
+    private String selectedFotoUri = null;
+
+    // Launcher para selecionar imagem via ACTION_OPEN_DOCUMENT
+    private final ActivityResultLauncher<Intent> pickImageLauncher =
+            registerForActivityResult(new ActivityResultContracts.StartActivityForResult(), result -> {
+                if (result.getResultCode() == RESULT_OK && result.getData() != null) {
+                    Uri uri = result.getData().getData();
+                    if (uri != null) {
+                        // Garante a permissão persistente para ler a URI futuramente
+                        final int takeFlags = result.getData().getFlags()
+                                & (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
+                        getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
+
+                        // Salva a URI como string
+                        selectedFotoUri = uri.toString();
+
+                        // Exibe a imagem localmente
+                        imgFoto.setImageURI(uri);
+                    }
+                }
+            });
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -37,14 +58,14 @@ public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_tela_adicionar);
 
-        // Ajuste de padding para as barras do sistema
+        // Ajusta o padding para as barras do sistema (opcional)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);
             return insets;
         });
 
-        // Vinculação dos componentes com os IDs do XML
+        // Vinculação dos componentes
         edtNomeRestaurante = findViewById(R.id.edtNomeRestaurante);
         edtEndereco = findViewById(R.id.edtEndereco);
         edtBairro = findViewById(R.id.edtBairro);
@@ -55,26 +76,15 @@ public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
         btnAdicionarFoto = findViewById(R.id.btnAdicionarFoto);
         imgFoto = findViewById(R.id.imgFoto);
 
-        // Configura o launcher para selecionar imagem da galeria
-        photoPickerLauncher = registerForActivityResult(
-                new ActivityResultContracts.StartActivityForResult(),
-                result -> {
-                    if (result.getResultCode() == RESULT_OK && result.getData() != null) {
-                        Uri selectedImageUri = result.getData().getData();
-                        // Exibe a imagem selecionada no ImageView
-                        imgFoto.setImageURI(selectedImageUri);
-                    }
-                }
-        );
-
-        // Abre a galeria ao clicar no botão de adicionar foto
+        // Botão para selecionar a imagem
         btnAdicionarFoto.setOnClickListener(view -> {
-            Intent intent = new Intent(Intent.ACTION_PICK);
+            Intent intent = new Intent(Intent.ACTION_OPEN_DOCUMENT);
+            intent.addCategory(Intent.CATEGORY_OPENABLE);
             intent.setType("image/*");
-            photoPickerLauncher.launch(intent);
+            pickImageLauncher.launch(intent);
         });
 
-        // Ao clicar em Salvar, cria o objeto Restaurante e adiciona no repositório em memória
+        // Botão para salvar
         btnSalvar.setOnClickListener(view -> {
             String nome = edtNomeRestaurante.getText().toString().trim();
             String endereco = edtEndereco.getText().toString().trim();
@@ -83,10 +93,19 @@ public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
             String descricao = edtDescricao.getText().toString().trim();
             float estrelas = ratingEstrelas.getRating();
 
+            if (nome.isEmpty() || endereco.isEmpty()) {
+                Toast.makeText(this, "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
+                return;
+            }
+
             Restaurante novoRestaurante = new Restaurante(nome, endereco, bairro, cidade, descricao, estrelas);
+            // Define a URI da foto (pode ser null se o usuário não selecionou)
+            novoRestaurante.setFotoUri(selectedFotoUri);
+
+            // Salva no repositório em memória
             RestauranteRepository.adicionarRestaurante(novoRestaurante);
 
-            // Abre a tela de Visualizar Restaurantes
+            // Vai para a tela de visualização
             Intent intent = new Intent(TelaAdicionarRestauranteActivity.this, TelaVisualizarRestaurantesActivity.class);
             startActivity(intent);
             finish();

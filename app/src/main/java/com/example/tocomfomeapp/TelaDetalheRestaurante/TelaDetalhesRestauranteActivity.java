@@ -3,12 +3,17 @@ package com.example.tocomfomeapp.TelaDetalheRestaurante;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.os.Bundle;
 import android.widget.ImageView;
 import android.widget.RatingBar;
 import android.widget.TextView;
 
 import com.example.tocomfomeapp.R;
+
+import java.io.InputStream;
 
 public class TelaDetalhesRestauranteActivity extends AppCompatActivity {
 
@@ -25,7 +30,6 @@ public class TelaDetalhesRestauranteActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_tela_detalhe_restaurante);
 
-        // Vincular componentes
         imgRestauranteDetalhe = findViewById(R.id.imgRestauranteDetalhe);
         txtNomeRestauranteDetalhe = findViewById(R.id.txtNomeRestauranteDetalhe);
         txtEnderecoDetalhe = findViewById(R.id.txtEnderecoDetalhe);
@@ -34,7 +38,6 @@ public class TelaDetalhesRestauranteActivity extends AppCompatActivity {
         txtDescricaoDetalhe = findViewById(R.id.txtDescricaoDetalhe);
         ratingEstrelasDetalhe = findViewById(R.id.ratingEstrelasDetalhe);
 
-        // Pegar dados enviados pela Intent
         Intent intent = getIntent();
         if (intent != null) {
             String nome = intent.getStringExtra("NOME_RESTAURANTE");
@@ -43,8 +46,8 @@ public class TelaDetalhesRestauranteActivity extends AppCompatActivity {
             String cidade = intent.getStringExtra("CIDADE_RESTAURANTE");
             String descricao = intent.getStringExtra("DESCRICAO_RESTAURANTE");
             float estrelas = intent.getFloatExtra("RATING_RESTAURANTE", 0f);
+            String fotoUri = intent.getStringExtra("FOTO_URI");
 
-            // Setar os valores nos componentes
             txtNomeRestauranteDetalhe.setText(nome);
             txtEnderecoDetalhe.setText(endereco);
             txtBairroDetalhe.setText(bairro);
@@ -52,7 +55,23 @@ public class TelaDetalhesRestauranteActivity extends AppCompatActivity {
             txtDescricaoDetalhe.setText(descricao);
             ratingEstrelasDetalhe.setRating(estrelas);
 
-            imgRestauranteDetalhe.setImageResource(R.drawable.ic_baseline_camera_alt_24);
+            // Carrega a foto, se existir
+            if (fotoUri != null && !fotoUri.isEmpty()) {
+                try {
+                    Uri imageUri = Uri.parse(fotoUri);
+                    InputStream inputStream = getContentResolver().openInputStream(imageUri);
+                    Bitmap bitmap = BitmapFactory.decodeStream(inputStream);
+                    if (inputStream != null) {
+                        inputStream.close();
+                    }
+                    imgRestauranteDetalhe.setImageBitmap(bitmap);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                    imgRestauranteDetalhe.setImageResource(R.drawable.ic_baseline_camera_alt_24);
+                }
+            } else {
+                imgRestauranteDetalhe.setImageResource(R.drawable.ic_baseline_camera_alt_24);
+            }
         }
     }
 }

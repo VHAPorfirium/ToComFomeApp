@@ -21,13 +21,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
-        // Ajusta layout para "Edge to Edge" (opcional)
         EdgeToEdge.enable(this);
-
         setContentView(R.layout.activity_main);
 
-        // Ajuste de padding levando em conta barras do sistema (opcional)
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.rootLayout), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

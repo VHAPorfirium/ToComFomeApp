@@ -1,6 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
-<manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools">
+<manifest
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    package="com.example.tocomfomeapp">
+
+    <!-- Permissão para ler o armazenamento externo (necessária em Android < 13) -->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:allowBackup="true"
@@ -11,28 +16,33 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/Theme.ToComFomeApp"
+        android:requestLegacyExternalStorage="true"
         tools:targetApi="31">
-        <activity
-            android:name=".TelaDetalheRestaurante.TelaDetalhesRestauranteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TelaVisualizar.TelaVisualizarRestaurantesActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TelaAdicionar.TelaAdicionarRestauranteActivity"
-            android:exported="false" />
-        <activity
-            android:name=".TelaAbertura.AberturaActivity"
-            android:exported="true">
-            <intent-filter>
-                <action android:name="android.intent.action.MAIN" />
 
-                <category android:name="android.intent.category.LAUNCHER" />
-            </intent-filter>
-        </activity>
-        <activity
-            android:name=".TelaPrincipal.MainActivity"
-            android:exported="true" />
-    </application>
+    <activity
+        android:name=".TelaDetalheRestaurante.TelaDetalhesRestauranteActivity"
+        android:exported="false" />
 
-</manifest>
+    <activity
+        android:name=".TelaVisualizar.TelaVisualizarRestaurantesActivity"
+        android:exported="false" />
+
+    <activity
+        android:name=".TelaAdicionar.TelaAdicionarRestauranteActivity"
+        android:exported="false" />
+
+    <activity
+        android:name=".TelaAbertura.AberturaActivity"
+        android:exported="true">
+        <intent-filter>
+            <action android:name="android.intent.action.MAIN" />
+            <category android:name="android.intent.category.LAUNCHER" />
+        </intent-filter>
+    </activity>
+
+    <activity
+        android:name=".TelaPrincipal.MainActivity"
+        android:exported="true" />
+</application>
+
+    </manifest>

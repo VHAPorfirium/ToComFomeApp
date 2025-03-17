@@ -7,6 +7,7 @@ public class Restaurante {
     private String cidade;
     private String descricao;
     private float estrelas;
+    private String fotoUri; // campo para armazenar a URI da foto
 
     public Restaurante(String nome, String endereco, String bairro, String cidade, String descricao, float estrelas) {
         this.nome = nome;
@@ -17,7 +18,6 @@ public class Restaurante {
         this.estrelas = estrelas;
     }
 
-    // Getters e Setters
     public String getNome() { return nome; }
     public void setNome(String nome) { this.nome = nome; }
 
@@ -35,4 +35,7 @@ public class Restaurante {
 
     public float getEstrelas() { return estrelas; }
     public void setEstrelas(float estrelas) { this.estrelas = estrelas; }
+
+    public String getFotoUri() { return fotoUri; }
+    public void setFotoUri(String fotoUri) { this.fotoUri = fotoUri; }
 }
