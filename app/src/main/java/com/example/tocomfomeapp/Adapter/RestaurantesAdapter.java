@@ -76,9 +76,10 @@ public class RestaurantesAdapter extends RecyclerView.Adapter<RestaurantesAdapte
             holder.imgRestaurante.setImageResource(R.drawable.ic_baseline_camera_alt_24);
         }
 
-        // Clique para abrir tela de detalhes
+        // Passa também o índice do item para a tela de detalhes
         holder.itemView.setOnClickListener(v -> {
             Intent intent = new Intent(context, TelaDetalhesRestauranteActivity.class);
+            intent.putExtra("INDEX", position);
             intent.putExtra("NOME_RESTAURANTE", restaurante.getNome());
             intent.putExtra("ENDERECO_RESTAURANTE", restaurante.getEndereco());
             intent.putExtra("BAIRRO_RESTAURANTE", restaurante.getBairro());
