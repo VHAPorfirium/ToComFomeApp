@@ -72,7 +72,7 @@ public class TelaEditarActivity extends AppCompatActivity {
                             // Pede permissão persistente para ler a URI
                             final int takeFlags = result.getData().getFlags() &
                                     (Intent.FLAG_GRANT_READ_URI_PERMISSION | Intent.FLAG_GRANT_WRITE_URI_PERMISSION);
-                            getContentResolver().takePersistableUriPermission(uri, takeFlags);
+                            getContentResolver().takePersistableUriPermission(uri, Intent.FLAG_GRANT_READ_URI_PERMISSION);
 
                             selectedFotoUri = uri.toString();
                             imgFoto.setImageURI(uri);
