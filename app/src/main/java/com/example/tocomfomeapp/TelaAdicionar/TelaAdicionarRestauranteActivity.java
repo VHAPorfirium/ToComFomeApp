@@ -93,7 +93,7 @@ public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
             String descricao = edtDescricao.getText().toString().trim();
             float estrelas = ratingEstrelas.getRating();
 
-            if (nome.isEmpty() || endereco.isEmpty()) {
+            if (nome.isEmpty() || endereco.isEmpty() || bairro.isEmpty() || cidade.isEmpty() || descricao.isEmpty()) {
                 Toast.makeText(this, "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
                 return;
             }
