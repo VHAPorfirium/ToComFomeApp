@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.tocomfomeapp.Model.Restaurante;
 import com.example.tocomfomeapp.Repository.RestauranteRepository;
 import com.example.tocomfomeapp.R;
+import com.example.tocomfomeapp.TelaPrincipal.MainActivity;
 import com.example.tocomfomeapp.TelaVisualizar.TelaVisualizarRestaurantesActivity;
 
 public class TelaEditarActivity extends AppCompatActivity {
@@ -123,7 +124,7 @@ public class TelaEditarActivity extends AppCompatActivity {
             String descricao = edtDescricao.getText().toString().trim();
             float estrelas = ratingEstrelas.getRating();
 
-            if(nome.isEmpty() || endereco.isEmpty()) {
+            if(nome.isEmpty() || endereco.isEmpty() || bairro.isEmpty() || cidade.isEmpty() || descricao.isEmpty()) {
                 Toast.makeText(this, "Preencha os campos obrigatórios", Toast.LENGTH_SHORT).show();
                 return;
             }
@@ -134,12 +135,12 @@ public class TelaEditarActivity extends AppCompatActivity {
             if(index != -1) {
                 // Atualiza o item no repositório
                 RestauranteRepository.editarRestaurante(index, novoRestaurante);
-                Toast.makeText(this, "Restaurante atualizado", Toast.LENGTH_SHORT).show();
+                Toast.makeText(this, "Editado com Sucesso!", Toast.LENGTH_SHORT).show();
             } else {
                 Toast.makeText(this, "Erro: índice inválido", Toast.LENGTH_SHORT).show();
             }
-            // Volta para a tela de visualização
-            Intent i = new Intent(TelaEditarActivity.this, TelaVisualizarRestaurantesActivity.class);
+            // Volta para a tela de principal
+            Intent i = new Intent(TelaEditarActivity.this, MainActivity.class);
             startActivity(i);
             finish();
         });

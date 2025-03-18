@@ -20,6 +20,7 @@ import androidx.core.view.WindowInsetsCompat;
 import com.example.tocomfomeapp.Model.Restaurante;
 import com.example.tocomfomeapp.Repository.RestauranteRepository;
 import com.example.tocomfomeapp.R;
+import com.example.tocomfomeapp.TelaPrincipal.MainActivity;
 import com.example.tocomfomeapp.TelaVisualizar.TelaVisualizarRestaurantesActivity;
 
 public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
@@ -106,8 +107,9 @@ public class TelaAdicionarRestauranteActivity extends AppCompatActivity {
             RestauranteRepository.adicionarRestaurante(novoRestaurante);
 
             // Vai para a tela de visualização
-            Intent intent = new Intent(TelaAdicionarRestauranteActivity.this, TelaVisualizarRestaurantesActivity.class);
+            Intent intent = new Intent(TelaAdicionarRestauranteActivity.this, MainActivity.class);
             startActivity(intent);
+            Toast.makeText(this, "Salvo com sucesso!", Toast.LENGTH_SHORT).show();
             finish();
         });
     }
